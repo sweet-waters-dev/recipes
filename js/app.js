@@ -1,27 +1,57 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // ---------------------------
+  // Mobile drawer menu
+  // ---------------------------
+  const sidebar = document.getElementById("sidebar");
+  const menuBtn = document.getElementById("menuBtn");
+  const scrim = document.getElementById("scrim");
+
+  function openMenu() {
+    sidebar.classList.add("is-open");
+    scrim.hidden = false;
+    menuBtn?.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove("is-open");
+    scrim.hidden = true;
+    menuBtn?.setAttribute("aria-expanded", "false");
+  }
+
+  menuBtn?.addEventListener("click", () => {
+    const isOpen = sidebar.classList.contains("is-open");
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  scrim?.addEventListener("click", closeMenu);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  // ---------------------------
   // Theme toggle (light/dark)
   // ---------------------------
   const themeToggle = document.getElementById("themeToggle");
   const themeToggleText = document.getElementById("themeToggleText");
+  const themeToggleTop = document.getElementById("themeToggleTop");
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    themeToggleText.textContent = theme === "light" ? "Light" : "Dark";
+    if (themeToggleText) themeToggleText.textContent = theme === "light" ? "Light" : "Dark";
   }
 
   const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "light" || savedTheme === "dark") {
-    applyTheme(savedTheme);
-  } else {
-    applyTheme("dark");
-  }
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark");
 
-  themeToggle?.addEventListener("click", () => {
+  function toggleTheme() {
     const current = document.documentElement.getAttribute("data-theme") || "dark";
     applyTheme(current === "dark" ? "light" : "dark");
-  });
+  }
+
+  themeToggle?.addEventListener("click", toggleTheme);
+  themeToggleTop?.addEventListener("click", toggleTheme);
 
   // ---------------------------
   // Elements
@@ -64,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   descriptionEl.textContent = version?.description || "";
 
   // ---------------------------
-  // Tags (replace difficulty chip)
+  // Tags (replace difficulty)
   // ---------------------------
   const tags = Array.isArray(data.recipeMeta?.tags) ? data.recipeMeta.tags : [];
   tagsRowEl.innerHTML = "";
@@ -156,7 +186,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const endX = e.changedTouches?.[0]?.clientX ?? null;
       if (startX === null || endX === null) return;
       const dx = endX - startX;
-      if (Math.abs(dx) < 40) return; // threshold
+      if (Math.abs(dx) < 40) return;
       if (dx > 0) prev();
       else next();
       startX = null;
