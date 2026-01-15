@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else {
     adjustments.forEach(adj => {
       const wrap = document.createElement("div");
-      wrap.style.marginBottom = "12px";
+      wrap.className = "adjustment";
       const stepNum = adj?.when?.stepNumber ?? "—";
       const check = adj?.check ?? "";
       wrap.innerHTML = `<strong>After step ${stepNum}:</strong> ${check}`;
