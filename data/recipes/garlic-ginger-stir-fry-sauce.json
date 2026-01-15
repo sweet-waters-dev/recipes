@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0",
+  "recipeMeta": {
+    "id": "garlic-ginger-stir-fry-sauce",
+    "title": "Garlic Ginger Stir-Fry Sauce",
+    "subtitle": "Balanced, savory, and weeknight-friendly",
+    "createdAt": "2026-01-14T17:00:00Z",
+    "updatedAt": "2026-01-14T17:00:00Z",
+    "tags": ["sauce", "stir-fry", "asian-inspired"]
+  },
+  "images": [
+    {
+      "id": "img_hero",
+      "kind": "url",
+      "uri": "https://picsum.photos/seed/stirfrysauce/1600/900",
+      "mimeType": "image/jpeg",
+      "alt": "Garlic Ginger Stir-Fry Sauce",
+      "caption": "Garlic Ginger Stir-Fry Sauce"
+    }
+  ],
+  "versions": [
+    {
+      "version": 1,
+      "status": "current",
+      "createdAt": "2026-01-14T17:00:00Z",
+      "difficulty": "easy",
+      "description": "A glossy, aromatic stir-fry sauce built on savory soy and warm ginger heat, with garlic depth that blooms in the pan. The finish is balanced—umami-forward, lightly sweet, and brightened with a small splash of acid. It clings to vegetables and protein in a thin lacquer, turning a simple skillet into something craveable. Designed to be tasted and tuned as it thickens.",
+      "imageRefs": [{ "imageId": "img_hero", "role": "hero" }],
+      "recipe": {
+        "yield": {
+          "servingsCount": 4,
+          "total": [
+            { "quantity": { "value": 180, "unit": "ml", "system": "metric" } },
+            { "quantity": { "value": 0.75, "unit": "cup", "system": "us" } }
+          ],
+          "serving": [
+            { "quantity": { "value": 45, "unit": "ml", "system": "metric" } },
+            { "quantity": { "value": 3, "unit": "tbsp", "system": "us" } }
+          ]
+        },
+        "ingredients": [
+          {
+            "group": "Sauce",
+            "items": [
+              {
+                "name": "Light soy sauce",
+                "quantity": { "base": { "value": 2, "unit": "tbsp", "system": "us" } }
+              },
+              {
+                "name": "Chicken broth",
+                "quantity": { "base": { "value": 0.25, "unit": "cup", "system": "us" } }
+              },
+              {
+                "name": "Fresh ginger, grated",
+                "quantity": { "base": { "value": 2, "unit": "tsp", "system": "us" } }
+              },
+              {
+                "name": "Garlic, minced",
+                "quantity": { "base": { "value": 2, "unit": "clove", "system": "custom" } }
+              },
+              {
+                "name": "Cornstarch",
+                "quantity": { "base": { "value": 2, "unit": "tsp", "system": "us" } }
+              }
+            ]
+          }
+        ],
+        "instructions": [
+          {
+            "group": "Sauce",
+            "steps": [
+              { "step": 1, "text": "Whisk all sauce ingredients together until smooth." },
+              { "step": 2, "text": "Pour into a hot skillet and simmer until glossy and lightly thickened." },
+              { "step": 3, "text": "Use immediately to coat vegetables or protein.", "stepType": "serve" }
+            ]
+          }
+        ],
+        "adjustments": [
+          {
+            "when": { "stepNumber": 2 },
+            "check": "Sauce should be glossy and lightly thickened.",
+            "ifNeeded": [
+              { "condition": "Too thick", "action": "Whisk in a splash of water." },
+              { "condition": "Too thin", "action": "Simmer 30 seconds longer." }
+            ]
+          }
+        ],
+        "nutrition": {
+          "scopes": {
+            "perServing": {
+              "energy_kcal": 52,
+              "macros_g": { "protein": 1, "carbs": 7, "fat": 1 }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
