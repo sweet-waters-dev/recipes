@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="app">
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="brand-row">
         <div class="brand">
           <div class="brand__logo">🍽️</div>
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <!-- Theme toggle (inside sidebar) -->
+        <!-- Theme toggle (also visible on desktop in sidebar) -->
         <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle light/dark mode">
           <span class="icon-btn__text" id="themeToggleText">Dark</span>
         </button>
@@ -40,6 +40,19 @@
     </aside>
 
     <main class="main">
+      <!-- Mobile top bar -->
+      <div class="topbar">
+        <button id="menuBtn" class="icon-btn icon-btn--square" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+        <div class="topbar__title">Recipes</div>
+        <!-- theme toggle duplicate on mobile topbar (optional but handy) -->
+        <button id="themeToggleTop" class="icon-btn icon-btn--square" type="button" aria-label="Toggle light/dark mode">
+          <span id="themeToggleTopIcon">◐</span>
+        </button>
+      </div>
+
+      <!-- Mobile scrim -->
+      <div id="scrim" class="scrim" hidden></div>
+
       <header class="hero" id="hero">
         <div class="hero__content">
           <div class="hero__grid">
