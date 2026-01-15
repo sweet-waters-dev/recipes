@@ -1,4 +1,38 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    // Mobile drawer menu
+  const sidebar = document.querySelector(".sidebar");
+  const menuBtn = document.getElementById("menuBtn");
+  const scrim = document.getElementById("scrim");
+
+  function openMenu() {
+    sidebar.classList.add("is-open");
+    scrim.hidden = false;
+    menuBtn.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove("is-open");
+    scrim.hidden = true;
+    menuBtn.setAttribute("aria-expanded", "false");
+  }
+
+  menuBtn?.addEventListener("click", () => {
+    const isOpen = sidebar.classList.contains("is-open");
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  scrim?.addEventListener("click", closeMenu);
+
+  // Close drawer if user taps a recipe in the list (future-proof)
+  document.getElementById("recipeList")?.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (li) closeMenu();
+  });
+
+  // Optional: close on Escape (desktop keyboards)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
   const recipePath = "data/recipes/garlic-ginger-stir-fry-sauce.json";
 
   const titleEl = document.getElementById("title");
