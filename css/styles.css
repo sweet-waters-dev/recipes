@@ -398,4 +398,6 @@ body{
   .hero__title{ font-size: 30px; }
   .content{ padding: 14px; }
   .grid{ grid-template-columns: 1fr; }
+  .adjustment { margin-bottom: 12px; }
+.adjustment:last-child { margin-bottom: 0; }
 }
