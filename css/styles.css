@@ -344,7 +344,15 @@ body{
 .card li{ margin: 7px 0; line-height: 1.45; }
 .small-muted{ color: var(--muted); font-size: 12px; }
 .footer{ margin-top: 10px; }
+/* Tighter typography inside cards */
+.card p { margin: 8px 0; }
+.card p:first-child { margin-top: 0; }
+.card p:last-child { margin-bottom: 0; }
 
+.card ul, .card ol { margin: 8px 0 0; }
+.card ul:last-child, .card ol:last-child { margin-bottom: 0; }
+
+.card li { margin: 6px 0; }
 /* =======================
    Responsive / Drawer
    ======================= */
@@ -368,7 +376,18 @@ body{
   .sidebar.is-open{
     transform: translateX(0);
   }
+  /* IMPORTANT: prevent the off-canvas sidebar from intercepting taps when closed */
+  .sidebar {
+    pointer-events: none; /* closed drawer should not block clicks */
+  }
+  .sidebar.is-open {
+    pointer-events: auto; /* open drawer is interactive */
+  }
 
+  /* Ensure topbar buttons reliably receive taps on iOS */
+  .topbar, .icon-btn {
+    touch-action: manipulation;
+  }
   .hero__grid{ grid-template-columns: 1fr; }
 
   /* Mobile: title/subtitle, then gallery, then description */
