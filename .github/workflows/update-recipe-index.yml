@@ -1,0 +1,76 @@
+name: Update recipe index
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "data/recipes/*.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-index:
+    # Prevent loop: don't run when the only change is index.json
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate data/recipes/index.json
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          INDEX="data/recipes/index.json"
+
+          # Build a sorted list of recipe json files (exclude index.json)
+          mapfile -t FILES < <(ls -1 data/recipes/*.json 2>/dev/null | grep -v "data/recipes/index.json" | sort)
+
+          # Start JSON
+          {
+            echo '{'
+            echo '  "generatedAt": "'"$(date -u +"%Y-%m-%dT%H:%M:%SZ")"'",'
+            echo '  "recipes": ['
+
+            first=1
+            for f in "${FILES[@]}"; do
+              base="$(basename "$f")"
+              id="${base%.json}"   # filename == recipeMeta.id
+              if [ $first -eq 1 ]; then
+                first=0
+              else
+                echo '    ,'
+              fi
+              echo '    {'
+              echo '      "id": "'"$id"'",'
+              echo '      "path": "data/recipes/'"$base"'"'
+              echo '    }'
+            done
+
+            echo ''
+            echo '  ]'
+            echo '}'
+          } > "$INDEX"
+
+      - name: Commit & push if changed
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- data/recipes/index.json; then
+            echo "No changes to index.json"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add data/recipes/index.json
+          git commit -m "chore: auto-update recipe index [skip ci]"
+          git push
