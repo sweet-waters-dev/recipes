@@ -1,0 +1,264 @@
+{
+  "schemaVersion": "1.0",
+
+  "recipeMeta": {
+    "id": "spinach-artichoke-stuffed-chicken-wine-dijon",
+    "title": "Spinach Artichoke Stuffed Chicken Breasts",
+    "subtitle": "Seared chicken with creamy filling and a wine–Dijon pan sauce",
+    "tags": ["chicken", "stuffed", "spinach", "artichoke", "wine-dijon", "low-carb"],
+    "createdAt": "2026-01-15T23:45:00Z",
+    "updatedAt": "2026-01-15T23:45:00Z",
+    "source": {
+      "type": "original",
+      "name": "Joshua Mullenberg",
+      "url": null
+    }
+  },
+
+  "images": [
+    {
+      "id": "hero-finished-dish",
+      "kind": "url",
+      "uri": "https://cookstorms.com/wp-content/uploads/2026/01/delicious-spinach-artichoke-stuffed-chicken-breasts-1.png",
+      "mimeType": "image/jpeg",
+      "alt": "Spinach artichoke stuffed chicken breasts with wine Dijon pan sauce",
+      "caption": "Finished dish, sliced to show creamy spinach artichoke filling"
+    },
+    {
+      "id": "step-searing-chicken",
+      "kind": "url",
+      "uri": "https://thecozycook.com/wp-content/uploads/2023/08/Stuffed-Chicken-Breast-1-1.jpg",
+      "mimeType": "image/jpeg",
+      "alt": "Stuffed chicken breasts searing in a skillet",
+      "caption": "Searing the stuffed chicken to build flavor before oven finishing"
+    }
+  ],
+
+  "versions": [
+    {
+      "version": 1,
+      "status": "current",
+      "createdAt": "2026-01-15T23:45:00Z",
+      "notes": "Initial sear-first version with wine–Dijon pan sauce.",
+
+      "description": "Juicy chicken breasts are stuffed with a creamy spinach and artichoke filling, then seared to develop a golden crust before finishing in the oven. The pan is deglazed with white wine and chicken broth, emulsified with Dijon, and finished lightly with cream for a balanced, savory sauce. Rich without being heavy, the dish highlights contrast between crisp exterior, tender chicken, and luscious filling.",
+
+      "imageRefs": [
+        {
+          "imageId": "hero-finished-dish",
+          "role": "hero"
+        },
+        {
+          "imageId": "step-searing-chicken",
+          "role": "step"
+        }
+      ],
+
+      "yield": {
+        "total": [
+          {
+            "quantity": { "value": 4, "unit": "portion", "system": "metric" }
+          }
+        ],
+        "serving": [
+          {
+            "quantity": { "value": 1, "unit": "portion", "system": "metric" }
+          }
+        ]
+      },
+
+      "components": [
+        { "id": "protein", "name": "Stuffed Chicken" },
+        { "id": "stuffing", "name": "Spinach Artichoke Filling" },
+        { "id": "sauce", "name": "Wine Dijon Pan Sauce" }
+      ],
+
+      "ingredients": [
+        {
+          "group": "Protein",
+          "componentId": "protein",
+          "items": [
+            {
+              "name": "Boneless skinless chicken breasts",
+              "quantity": {
+                "base": { "value": 680, "unit": "g", "system": "metric" }
+              },
+              "notes": "4 breasts, butterflied or pocket-cut"
+            },
+            {
+              "name": "Salt",
+              "quantity": {
+                "base": { "value": 4, "unit": "g", "system": "metric" }
+              },
+              "notes": "Divided"
+            },
+            {
+              "name": "Black pepper",
+              "quantity": {
+                "base": { "value": 1, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Olive oil",
+              "quantity": {
+                "base": { "value": 15, "unit": "g", "system": "metric" }
+              },
+              "notes": "For searing"
+            }
+          ]
+        },
+        {
+          "group": "Stuffing",
+          "componentId": "stuffing",
+          "items": [
+            {
+              "name": "Cream cheese",
+              "quantity": {
+                "base": { "value": 115, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Mozzarella cheese",
+              "quantity": {
+                "base": { "value": 85, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Parmesan cheese",
+              "quantity": {
+                "base": { "value": 30, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Spinach",
+              "quantity": {
+                "base": { "value": 90, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Artichoke hearts, canned",
+              "quantity": {
+                "base": { "value": 120, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Garlic",
+              "quantity": {
+                "base": { "value": 8, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Italian seasoning",
+              "quantity": {
+                "base": { "value": 2, "unit": "g", "system": "metric" }
+              }
+            }
+          ]
+        },
+        {
+          "group": "Sauce",
+          "componentId": "sauce",
+          "items": [
+            {
+              "name": "Dry white wine",
+              "quantity": {
+                "base": { "value": 60, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Chicken broth",
+              "quantity": {
+                "base": { "value": 120, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Dijon mustard",
+              "quantity": {
+                "base": { "value": 5, "unit": "g", "system": "metric" }
+              }
+            },
+            {
+              "name": "Heavy cream",
+              "quantity": {
+                "base": { "value": 30, "unit": "g", "system": "metric" }
+              }
+            }
+          ]
+        }
+      ],
+
+      "instructions": [
+        {
+          "group": "Stuffing",
+          "componentId": "stuffing",
+          "steps": [
+            { "step": 1, "text": "Mix all stuffing ingredients until fully combined." }
+          ]
+        },
+        {
+          "group": "Chicken",
+          "componentId": "protein",
+          "steps": [
+            { "step": 2, "text": "Season and stuff chicken breasts." },
+            { "step": 3, "text": "Sear chicken until deeply golden on both sides." },
+            { "step": 4, "text": "Finish in a 190°C / 375°F oven until cooked through." }
+          ]
+        },
+        {
+          "group": "Sauce",
+          "componentId": "sauce",
+          "steps": [
+            { "step": 5, "text": "Deglaze pan with wine and reduce." },
+            { "step": 6, "text": "Add broth, reduce, and whisk in Dijon." },
+            { "step": 7, "text": "Lower heat and stir in cream until glossy." }
+          ]
+        },
+        {
+          "group": "Serve",
+          "steps": [
+            {
+              "step": 8,
+              "text": "Rest chicken briefly and serve with sauce spooned around.",
+              "stepType": "serve"
+            }
+          ]
+        }
+      ],
+
+      "adjustments": [
+        {
+          "when": { "afterStep": 7 },
+          "check": "Sauce should lightly coat the back of a spoon.",
+          "ifNeeded": [
+            { "condition": "Too thick", "action": "Whisk in additional broth." },
+            { "condition": "Too sharp", "action": "Add a small splash of cream." }
+          ]
+        }
+      ],
+
+      "timing": {
+        "prep": { "value": 20, "unit": "minute" },
+        "cook": { "value": 30, "unit": "minute" },
+        "chill": null,
+        "total": { "value": 50, "unit": "minute" }
+      },
+
+      "equipment": [
+        "Oven-safe skillet",
+        "Mixing bowl",
+        "Instant-read thermometer"
+      ],
+
+      "nutrition": {
+        "perServing": {
+          "energy_kcal": 420,
+          "macros_g": {
+            "protein": 46,
+            "carbs": 6,
+            "fat": 23
+          }
+        }
+      }
+    }
+  ]
+}
