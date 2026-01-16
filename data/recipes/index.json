@@ -1,9 +1,14 @@
 {
-  "generatedAt": "2026-01-16T18:35:03Z",
+  "generatedAt": "2026-01-16T22:19:52Z",
   "recipes": [
     {
       "id": "garlic-ginger-stir-fry-sauce",
       "path": "data/recipes/garlic-ginger-stir-fry-sauce.json"
+    }
+    ,
+    {
+      "id": "protein-dirt-dessert-v1",
+      "path": "data/recipes/protein-dirt-dessert-v1.json"
     }
     ,
     {
