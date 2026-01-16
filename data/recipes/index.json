@@ -1,4 +1,15 @@
 {
-  "generatedAt": null,
-  "recipes": []
+  "generatedAt": "2026-01-16T18:35:03Z",
+  "recipes": [
+    {
+      "id": "garlic-ginger-stir-fry-sauce",
+      "path": "data/recipes/garlic-ginger-stir-fry-sauce.json"
+    }
+    ,
+    {
+      "id": "spinach-artichoke-stuffed-chicken-wine-dijon",
+      "path": "data/recipes/spinach-artichoke-stuffed-chicken-wine-dijon.json"
+    }
+
+  ]
 }
