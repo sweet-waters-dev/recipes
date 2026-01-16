@@ -12,6 +12,14 @@
     {
       "id": "img_hero",
       "kind": "url",
+      "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnBNWFOCe-2mGmUe7KqnaTQRPfXE8xpFkobvMfeVE4ew&s=10",
+      "mimeType": "image/jpeg",
+      "alt": "Stir-Fry Sauce in Mason Jar",
+      "caption": "Garlic Ginger Stir-Fry Sauce"
+    },
+    {
+      "id": "img_hero2",
+      "kind": "url",
       "uri": "https://www.forkinthekitchen.com/wp-content/uploads/2022/01/220113.stir_.fry_.sauce-0216-600x600.jpg",
       "mimeType": "image/jpeg",
       "alt": "Garlic Ginger Stir-Fry Sauce",
@@ -25,7 +33,7 @@
       "createdAt": "2026-01-14T17:00:00Z",
       "difficulty": "easy",
       "description": "A glossy, aromatic stir-fry sauce built on savory soy and warm ginger heat, with garlic depth that blooms in the pan. The finish is balanced—umami-forward, lightly sweet, and brightened with a small splash of acid. It clings to vegetables and protein in a thin lacquer, turning a simple skillet into something craveable. Designed to be tasted and tuned as it thickens.",
-      "imageRefs": [{ "imageId": "img_hero", "role": "hero" }],
+      "imageRefs": [{ "imageId": "img_hero", "role": "hero" },{ "imageId": "img_hero2", "role": "hero2" } ],
       "recipe": {
         "yield": {
           "servingsCount": 4,
