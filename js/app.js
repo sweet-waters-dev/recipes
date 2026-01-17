@@ -7,19 +7,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   const scrim = document.getElementById("scrim");
 
   function openMenu() {
-    sidebar.classList.add("is-open");
-    scrim.hidden = false;
+    sidebar?.classList.add("is-open");
+    if (scrim) scrim.hidden = false;
     menuBtn?.setAttribute("aria-expanded", "true");
   }
 
   function closeMenu() {
-    sidebar.classList.remove("is-open");
-    scrim.hidden = true;
+    sidebar?.classList.remove("is-open");
+    if (scrim) scrim.hidden = true;
     menuBtn?.setAttribute("aria-expanded", "false");
   }
 
   menuBtn?.addEventListener("click", () => {
-    const isOpen = sidebar.classList.contains("is-open");
+    const isOpen = sidebar?.classList.contains("is-open");
     isOpen ? closeMenu() : openMenu();
   });
 
@@ -27,6 +27,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
+  });
+
+  // Close drawer when a recipe is selected (mobile)
+  document.getElementById("recipeList")?.addEventListener("click", (e) => {
+    const li = e.target.closest("li[data-id]");
+    if (li) closeMenu();
   });
 
   // ---------------------------
@@ -56,6 +62,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ---------------------------
   // Elements
   // ---------------------------
+  const searchInput = document.getElementById("searchInput");
+  const recipeListEl = document.getElementById("recipeList");
+
   const titleEl = document.getElementById("title");
   const subtitleEl = document.getElementById("subtitle");
   const descriptionEl = document.getElementById("description");
@@ -70,55 +79,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const nutritionEl = document.getElementById("nutrition");
 
   // ---------------------------
-  // Load a single recipe (for now)
+  // Helpers
   // ---------------------------
-  const recipePath = "data/recipes/garlic-ginger-stir-fry-sauce.json";
-
-  let data;
-  try {
-    const res = await fetch(recipePath, { cache: "no-store" });
-    data = await res.json();
-  } catch (err) {
-    titleEl.textContent = "Could not load recipe JSON";
-    descriptionEl.textContent = String(err);
-    return;
+  async function fetchJson(path) {
+    const res = await fetch(path, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} loading ${path}`);
+    return await res.json();
   }
 
-  const version = data.versions.find(v => v.status === "current") || data.versions[0];
+  function pickCurrentVersion(recipeJson) {
+    const versions = Array.isArray(recipeJson?.versions) ? recipeJson.versions : [];
+    return versions.find(v => v.status === "current") || versions[0] || null;
+  }
+
+  function safeText(el, text) {
+    if (!el) return;
+    el.textContent = text ?? "";
+  }
 
   // ---------------------------
-  // Title / subtitle / description
+  // Gallery builder
   // ---------------------------
-  titleEl.textContent = data.recipeMeta?.title || "Untitled";
-  subtitleEl.textContent = data.recipeMeta?.subtitle || "";
-  descriptionEl.textContent = version?.description || "";
-
-  // ---------------------------
-  // Tags (replace difficulty)
-  // ---------------------------
-  const tags = Array.isArray(data.recipeMeta?.tags) ? data.recipeMeta.tags : [];
-  tagsRowEl.innerHTML = "";
-  tags.forEach(t => {
-    const span = document.createElement("span");
-    span.className = "chip";
-    span.textContent = t;
-    tagsRowEl.appendChild(span);
-  });
-
-  // ---------------------------
-  // Gallery (version-specific imageRefs)
-  // ---------------------------
-  const allImages = Array.isArray(data.images) ? data.images : [];
-  const refs = Array.isArray(version?.imageRefs) ? version.imageRefs : [];
-
-  const versionImages = refs
-    .map(r => allImages.find(img => img.id === r.imageId))
-    .filter(Boolean);
-
-  function buildGallery(container, images) {
+  function buildGallery(container, images, recipeTitle) {
     if (!container) return;
 
-    if (!images.length) {
+    if (!images || !images.length) {
       container.innerHTML = `<div class="small-muted" style="padding:12px;">No images for this version.</div>`;
       return;
     }
@@ -159,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function render() {
       const img = images[index];
       imgEl.src = img.uri;
-      imgEl.alt = img.alt || data.recipeMeta?.title || "Recipe photo";
+      imgEl.alt = img.alt || recipeTitle || "Recipe photo";
       renderDots();
     }
 
@@ -173,8 +158,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       render();
     }
 
-    prevBtn.addEventListener("click", prev);
-    nextBtn.addEventListener("click", next);
+    prevBtn?.addEventListener("click", prev);
+    nextBtn?.addEventListener("click", next);
 
     // Swipe support (touch)
     let startX = null;
@@ -187,95 +172,271 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (startX === null || endX === null) return;
       const dx = endX - startX;
       if (Math.abs(dx) < 40) return;
-      if (dx > 0) prev();
-      else next();
+      dx > 0 ? prev() : next();
       startX = null;
     }, { passive: true });
 
     render();
   }
 
-  buildGallery(galleryDesktopEl, versionImages);
-  buildGallery(galleryMobileEl, versionImages);
-
   // ---------------------------
-  // Ingredients (grouped)
+  // Render recipe into page
   // ---------------------------
-  ingredientsEl.innerHTML = "";
-  (version?.recipe?.ingredients || []).forEach(group => {
-    const h = document.createElement("h3");
-    h.textContent = group.group || "Ingredients";
-    ingredientsEl.appendChild(h);
+  function renderRecipe(recipeJson) {
+    const meta = recipeJson?.recipeMeta || {};
+    const version = pickCurrentVersion(recipeJson);
 
-    const ul = document.createElement("ul");
-    (group.items || []).forEach(item => {
-      const li = document.createElement("li");
-      const base = item?.quantity?.base;
-      const qty = base ? `${base.value} ${base.unit}` : "";
-      li.textContent = `${qty} ${item.name}`.trim();
-      ul.appendChild(li);
-    });
-    ingredientsEl.appendChild(ul);
-  });
+    safeText(titleEl, meta.title || "Untitled");
+    safeText(subtitleEl, meta.subtitle || "");
+    safeText(descriptionEl, version?.description || "");
 
-  // ---------------------------
-  // Instructions (grouped)
-  // ---------------------------
-  instructionsEl.innerHTML = "";
-  (version?.recipe?.instructions || []).forEach(group => {
-    const h = document.createElement("h3");
-    h.textContent = group.group || "Instructions";
-    instructionsEl.appendChild(h);
-
-    const ol = document.createElement("ol");
-    (group.steps || []).forEach(s => {
-      const li = document.createElement("li");
-      li.textContent = s.text;
-      ol.appendChild(li);
-    });
-    instructionsEl.appendChild(ol);
-  });
-
-  // ---------------------------
-  // Adjustments
-  // ---------------------------
-  adjustmentsEl.innerHTML = "";
-  const adjustments = version?.recipe?.adjustments || [];
-  if (!adjustments.length) {
-    adjustmentsEl.innerHTML = `<div class="small-muted">No adjustments listed.</div>`;
-  } else {
-    adjustments.forEach(adj => {
-      const wrap = document.createElement("div");
-      wrap.className = "adjustment";
-      const stepNum = adj?.when?.stepNumber ?? "—";
-      const check = adj?.check ?? "";
-      wrap.innerHTML = `<strong>After step ${stepNum}:</strong> ${check}`;
-
-      const list = document.createElement("ul");
-      (adj.ifNeeded || []).forEach(x => {
-        const li = document.createElement("li");
-        li.textContent = `${x.condition}: ${x.action}`;
-        list.appendChild(li);
+    // Tags
+    const tags = Array.isArray(meta.tags) ? meta.tags : [];
+    if (tagsRowEl) {
+      tagsRowEl.innerHTML = "";
+      tags.forEach(t => {
+        const span = document.createElement("span");
+        span.className = "chip";
+        span.textContent = t;
+        tagsRowEl.appendChild(span);
       });
-      if (list.children.length) wrap.appendChild(list);
+    }
 
-      adjustmentsEl.appendChild(wrap);
+    // Images for version
+    const allImages = Array.isArray(recipeJson?.images) ? recipeJson.images : [];
+    const refs = Array.isArray(version?.imageRefs) ? version.imageRefs : [];
+    const versionImages = refs
+      .map(r => allImages.find(img => img.id === r.imageId))
+      .filter(Boolean);
+
+    buildGallery(galleryDesktopEl, versionImages, meta.title);
+    buildGallery(galleryMobileEl, versionImages, meta.title);
+
+    // Ingredients
+    if (ingredientsEl) {
+      ingredientsEl.innerHTML = "";
+      (version?.recipe?.ingredients || []).forEach(group => {
+        const h = document.createElement("h3");
+        h.textContent = group.group || "Ingredients";
+        ingredientsEl.appendChild(h);
+
+        const ul = document.createElement("ul");
+        (group.items || []).forEach(item => {
+          const li = document.createElement("li");
+          const base = item?.quantity?.base;
+          const qty = base ? `${base.value} ${base.unit}` : "";
+          li.textContent = `${qty} ${item.name}`.trim();
+          ul.appendChild(li);
+        });
+        ingredientsEl.appendChild(ul);
+      });
+    }
+
+    // Instructions
+    if (instructionsEl) {
+      instructionsEl.innerHTML = "";
+      (version?.recipe?.instructions || []).forEach(group => {
+        const h = document.createElement("h3");
+        h.textContent = group.group || "Instructions";
+        instructionsEl.appendChild(h);
+
+        const ol = document.createElement("ol");
+        (group.steps || []).forEach(s => {
+          const li = document.createElement("li");
+          li.textContent = s.text;
+          ol.appendChild(li);
+        });
+        instructionsEl.appendChild(ol);
+      });
+    }
+
+    // Adjustments
+    if (adjustmentsEl) {
+      adjustmentsEl.innerHTML = "";
+      const adjustments = version?.recipe?.adjustments || [];
+      if (!adjustments.length) {
+        adjustmentsEl.innerHTML = `<div class="small-muted">No adjustments listed.</div>`;
+      } else {
+        adjustments.forEach(adj => {
+          const wrap = document.createElement("div");
+          wrap.className = "adjustment";
+
+          // Support both { afterStep } and { stepNumber } naming
+          const stepNum =
+            adj?.when?.afterStep ??
+            adj?.when?.stepNumber ??
+            "—";
+
+          const check = adj?.check ?? "";
+          wrap.innerHTML = `<strong>After step ${stepNum}:</strong> ${check}`;
+
+          const list = document.createElement("ul");
+          (adj.ifNeeded || []).forEach(x => {
+            const li = document.createElement("li");
+            li.textContent = `${x.condition}: ${x.action}`;
+            list.appendChild(li);
+          });
+          if (list.children.length) wrap.appendChild(list);
+
+          adjustmentsEl.appendChild(wrap);
+        });
+      }
+    }
+
+    // Nutrition (simple perServing)
+    if (nutritionEl) {
+      const n = version?.recipe?.nutrition?.scopes?.perServing;
+      if (!n) {
+        nutritionEl.innerHTML = `<div class="small-muted">No nutrition data available.</div>`;
+      } else {
+        const m = n.macros_g || {};
+        nutritionEl.innerHTML = `
+          <p><strong>Calories:</strong> ${n.energy_kcal ?? "—"} kcal</p>
+          <p><strong>Protein:</strong> ${m.protein ?? "—"} g</p>
+          <p><strong>Carbs:</strong> ${m.carbs ?? "—"} g</p>
+          <p><strong>Fat:</strong> ${m.fat ?? "—"} g</p>
+        `;
+      }
+    }
+  }
+
+  // ---------------------------
+  // Sidebar: load index and populate list
+  // ---------------------------
+  let indexData;
+  try {
+    indexData = await fetchJson("data/recipes/index.json");
+  } catch (err) {
+    if (recipeListEl) {
+      recipeListEl.innerHTML = `<li class="recipe-list__loading">Could not load index.json: ${String(err)}</li>`;
+    }
+    return;
+  }
+
+  const indexRecipes = Array.isArray(indexData?.recipes) ? indexData.recipes : [];
+  if (!indexRecipes.length) {
+    if (recipeListEl) recipeListEl.innerHTML = `<li class="recipe-list__loading">No recipes found.</li>`;
+    return;
+  }
+
+  // Load metadata for sidebar display (title/subtitle) without rendering everything yet
+  // We’ll fetch each recipe once to grab title; cache results for click.
+  const recipeCache = new Map(); // id -> recipeJson
+
+  async function getRecipeById(id) {
+    if (recipeCache.has(id)) return recipeCache.get(id);
+    const entry = indexRecipes.find(r => r.id === id);
+    if (!entry) throw new Error(`Recipe not found in index: ${id}`);
+    const recipeJson = await fetchJson(entry.path);
+    recipeCache.set(id, recipeJson);
+    return recipeJson;
+  }
+
+  // Build sidebar list items
+  const sidebarItems = [];
+
+  for (const r of indexRecipes) {
+    try {
+      const recipeJson = await getRecipeById(r.id);
+      const title = recipeJson?.recipeMeta?.title || r.id;
+      const subtitle = recipeJson?.recipeMeta?.subtitle || "";
+      sidebarItems.push({ id: r.id, title, subtitle });
+    } catch (e) {
+      sidebarItems.push({ id: r.id, title: r.id, subtitle: "Could not load recipe" });
+    }
+  }
+
+  sidebarItems.sort((a, b) => a.title.localeCompare(b.title));
+
+  function renderSidebarList(filterText = "") {
+    if (!recipeListEl) return;
+    const q = (filterText || "").trim().toLowerCase();
+
+    const filtered = sidebarItems.filter(item => {
+      if (!q) return true;
+      return (
+        item.title.toLowerCase().includes(q) ||
+        item.subtitle.toLowerCase().includes(q) ||
+        item.id.toLowerCase().includes(q)
+      );
+    });
+
+    recipeListEl.innerHTML = "";
+
+    if (!filtered.length) {
+      const li = document.createElement("li");
+      li.className = "recipe-list__loading";
+      li.textContent = "No matches.";
+      recipeListEl.appendChild(li);
+      return;
+    }
+
+    filtered.forEach(item => {
+      const li = document.createElement("li");
+      li.setAttribute("data-id", item.id);
+      li.style.padding = "10px 10px";
+      li.style.borderRadius = "12px";
+      li.style.cursor = "pointer";
+
+      li.innerHTML = `
+        <div style="font-weight:700;">${item.title}</div>
+        ${item.subtitle ? `<div class="small-muted" style="margin-top:2px;">${item.subtitle}</div>` : ""}
+      `;
+
+      li.addEventListener("click", async () => {
+        // Update URL hash for deep links
+        window.location.hash = item.id;
+
+        try {
+          const recipeJson = await getRecipeById(item.id);
+          renderRecipe(recipeJson);
+        } catch (err) {
+          safeText(titleEl, "Could not load recipe");
+          safeText(descriptionEl, String(err));
+        }
+      });
+
+      recipeListEl.appendChild(li);
     });
   }
 
+  renderSidebarList("");
+
+  searchInput?.addEventListener("input", (e) => {
+    renderSidebarList(e.target.value);
+  });
+
   // ---------------------------
-  // Nutrition (simple perServing)
+  // Initial load: hash id, or first recipe in list
   // ---------------------------
-  const n = version?.recipe?.nutrition?.scopes?.perServing;
-  if (!n) {
-    nutritionEl.innerHTML = `<div class="small-muted">No nutrition data available.</div>`;
-  } else {
-    const m = n.macros_g || {};
-    nutritionEl.innerHTML = `
-      <p><strong>Calories:</strong> ${n.energy_kcal ?? "—"} kcal</p>
-      <p><strong>Protein:</strong> ${m.protein ?? "—"} g</p>
-      <p><strong>Carbs:</strong> ${m.carbs ?? "—"} g</p>
-      <p><strong>Fat:</strong> ${m.fat ?? "—"} g</p>
-    `;
+  async function loadInitial() {
+    const hashId = (window.location.hash || "").replace("#", "").trim();
+    const initialId = hashId && indexRecipes.some(r => r.id === hashId)
+      ? hashId
+      : sidebarItems[0].id;
+
+    try {
+      const recipeJson = await getRecipeById(initialId);
+      renderRecipe(recipeJson);
+    } catch (err) {
+      safeText(titleEl, "Could not load recipe");
+      safeText(descriptionEl, String(err));
+    }
   }
+
+  // If user changes hash manually/back button
+  window.addEventListener("hashchange", async () => {
+    const id = (window.location.hash || "").replace("#", "").trim();
+    if (!id) return;
+    if (!indexRecipes.some(r => r.id === id)) return;
+    try {
+      const recipeJson = await getRecipeById(id);
+      renderRecipe(recipeJson);
+    } catch (err) {
+      safeText(titleEl, "Could not load recipe");
+      safeText(descriptionEl, String(err));
+    }
+  });
+
+  await loadInitial();
 });
