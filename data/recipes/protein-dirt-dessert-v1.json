@@ -1,6 +1,5 @@
 {
   "schemaVersion": "1.0",
-
   "recipeMeta": {
     "id": "protein-dirt-dessert-v1",
     "title": "High-Protein Oreo-Style Dirt Dessert",
@@ -19,7 +18,6 @@
       "name": "Joshua Mullenberg"
     }
   },
-
   "images": [
     {
       "id": "hero",
@@ -38,108 +36,431 @@
       "caption": "Baked Oreo-style crumb topping"
     }
   ],
-
   "versions": [
     {
       "version": 1,
-      "status": "final",
-
+      "status": "current",
       "yield": {
-        "servings": 4,
-        "unit": "cups"
+        "total": [
+          {
+            "quantity": {
+              "value": 960,
+              "unit": "ml",
+              "system": "metric"
+            }
+          },
+          {
+            "quantity": {
+              "value": 4.0,
+              "unit": "cup",
+              "system": "us"
+            }
+          }
+        ],
+        "serving": [
+          {
+            "quantity": {
+              "value": 240,
+              "unit": "ml",
+              "system": "metric"
+            }
+          },
+          {
+            "quantity": {
+              "value": 1,
+              "unit": "cup",
+              "system": "us"
+            }
+          }
+        ]
       },
-
       "components": [
         {
           "id": "stabilized-whipped-base",
-          "title": "Stabilized Whipped Cottage Cheese Base",
-          "ingredients": [
-            { "name": "Low-fat cottage cheese", "amount": 450, "unit": "g" },
-            { "name": "Milk (or unsweetened almond milk)", "amount": 45, "unit": "mL" },
-            { "name": "Monk fruit sweetener", "amount": 20, "unit": "g", "note": "or to taste" },
-            { "name": "Vanilla extract", "amount": 5, "unit": "mL" },
-            { "name": "Salt", "amount": 1, "unit": "g" },
-            { "name": "Unflavored gelatin", "amount": 4, "unit": "g" },
-            { "name": "Cold water", "amount": 30, "unit": "mL" }
-          ],
-          "instructions": [
-            "Bloom gelatin in cold water for 2–3 minutes.",
-            "Heat gently until just liquid (do not boil).",
-            "Blend cottage cheese, milk, vanilla, sweetener, and salt until completely smooth.",
-            "With blender running, drizzle in gelatin.",
-            "Chill mixture 20–30 minutes.",
-            "Whip with hand mixer or food processor until light and airy."
-          ]
+          "name": "Stabilized Whipped Cottage Cheese Base"
         },
-
         {
           "id": "chocolate-mousse-layer",
-          "title": "Chocolate Pudding Whipped Mousse",
-          "ingredients": [
-            { "name": "Sugar-free chocolate instant pudding mix", "amount": 24, "unit": "g" },
-            { "name": "Cold milk", "amount": 180, "unit": "mL" },
-            { "name": "Whipped cottage cheese base", "amount": 240, "unit": "g" }
-          ],
-          "instructions": [
-            "Whisk pudding mix with milk for 2 minutes.",
-            "Let thicken for 5 minutes.",
-            "Gently fold in whipped cottage cheese base."
-          ]
+          "name": "Chocolate Pudding Whipped Mousse"
         },
-
         {
           "id": "vanilla-mousse-layer",
-          "title": "Vanilla Pudding Whipped Mousse",
-          "ingredients": [
-            { "name": "Sugar-free vanilla instant pudding mix", "amount": 24, "unit": "g" },
-            { "name": "Cold milk", "amount": 180, "unit": "mL" },
-            { "name": "Whipped cottage cheese base", "amount": 240, "unit": "g" },
-            { "name": "Almond extract", "amount": 1, "unit": "mL", "optional": true }
-          ],
-          "instructions": [
-            "Whisk pudding mix with milk for 2 minutes.",
-            "Let thicken for 5 minutes.",
-            "Fold in whipped cottage cheese base and almond extract."
-          ]
+          "name": "Vanilla Pudding Whipped Mousse"
         },
-
         {
           "id": "oreo-style-crumb",
-          "title": "Baked Oreo-Style Crumb Topping",
-          "ingredients": [
-            { "name": "Oat flour", "amount": 75, "unit": "g" },
-            { "name": "Unsweetened cocoa powder", "amount": 15, "unit": "g" },
-            { "name": "Powdered monk fruit sweetener", "amount": 30, "unit": "g" },
-            { "name": "Salt", "amount": 1, "unit": "g" },
-            { "name": "Butter or coconut oil, melted", "amount": 25, "unit": "g" },
-            { "name": "Vanilla extract", "amount": 5, "unit": "mL" },
-            { "name": "Espresso powder", "amount": 0.5, "unit": "g", "optional": true }
-          ],
-          "instructions": [
-            "Preheat oven to 165°C (325°F).",
-            "Mix all dry ingredients.",
-            "Stir in melted fat and vanilla.",
-            "Spread thin on parchment-lined tray.",
-            "Bake 8–10 minutes, stirring once.",
-            "Cool completely, then crumble finely."
-          ]
+          "name": "Baked Oreo-Style Crumb Topping"
         }
       ],
-
-      "assembly": [
-        "Spoon chocolate mousse into serving cups.",
-        "Layer vanilla mousse on top.",
-        "Finish with Oreo-style crumb topping.",
-        "Chill at least 1 hour before serving."
-      ],
-
       "storage": {
         "refrigerated": {
           "optimalDays": 3,
           "maximumDays": 4,
           "notes": "For best texture beyond 3 days, store crumb separately and add before serving."
         }
-      }
+      },
+      "ingredients": [
+        {
+          "group": "Stabilized Whipped Cottage Cheese Base",
+          "componentId": "stabilized-whipped-base",
+          "items": [
+            {
+              "name": "Low-fat cottage cheese",
+              "quantity": {
+                "base": {
+                  "value": 450,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Milk (or unsweetened almond milk)",
+              "quantity": {
+                "base": {
+                  "value": 45,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Monk fruit sweetener",
+              "quantity": {
+                "base": {
+                  "value": 20,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              },
+              "notes": "or to taste"
+            },
+            {
+              "name": "Vanilla extract",
+              "quantity": {
+                "base": {
+                  "value": 5,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Salt",
+              "quantity": {
+                "base": {
+                  "value": 1,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Unflavored gelatin",
+              "quantity": {
+                "base": {
+                  "value": 4,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Cold water",
+              "quantity": {
+                "base": {
+                  "value": 30,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group": "Chocolate Pudding Whipped Mousse",
+          "componentId": "chocolate-mousse-layer",
+          "items": [
+            {
+              "name": "Sugar-free chocolate instant pudding mix",
+              "quantity": {
+                "base": {
+                  "value": 24,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Cold milk",
+              "quantity": {
+                "base": {
+                  "value": 180,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Whipped cottage cheese base",
+              "quantity": {
+                "base": {
+                  "value": 240,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group": "Vanilla Pudding Whipped Mousse",
+          "componentId": "vanilla-mousse-layer",
+          "items": [
+            {
+              "name": "Sugar-free vanilla instant pudding mix",
+              "quantity": {
+                "base": {
+                  "value": 24,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Cold milk",
+              "quantity": {
+                "base": {
+                  "value": 180,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Whipped cottage cheese base",
+              "quantity": {
+                "base": {
+                  "value": 240,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Almond extract",
+              "quantity": {
+                "base": {
+                  "value": 1,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              },
+              "notes": "optional"
+            }
+          ]
+        },
+        {
+          "group": "Baked Oreo-Style Crumb Topping",
+          "componentId": "oreo-style-crumb",
+          "items": [
+            {
+              "name": "Oat flour",
+              "quantity": {
+                "base": {
+                  "value": 75,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Unsweetened cocoa powder",
+              "quantity": {
+                "base": {
+                  "value": 15,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Powdered monk fruit sweetener",
+              "quantity": {
+                "base": {
+                  "value": 30,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Salt",
+              "quantity": {
+                "base": {
+                  "value": 1,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Butter or coconut oil, melted",
+              "quantity": {
+                "base": {
+                  "value": 25,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Vanilla extract",
+              "quantity": {
+                "base": {
+                  "value": 5,
+                  "unit": "ml",
+                  "system": "metric"
+                }
+              }
+            },
+            {
+              "name": "Espresso powder",
+              "quantity": {
+                "base": {
+                  "value": 0.5,
+                  "unit": "g",
+                  "system": "metric"
+                }
+              },
+              "notes": "optional"
+            }
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "group": "Stabilized Whipped Cottage Cheese Base",
+          "componentId": "stabilized-whipped-base",
+          "steps": [
+            {
+              "step": 1,
+              "text": "Bloom gelatin in cold water for 2–3 minutes."
+            },
+            {
+              "step": 2,
+              "text": "Heat gently until just liquid (do not boil)."
+            },
+            {
+              "step": 3,
+              "text": "Blend cottage cheese, milk, vanilla, sweetener, and salt until completely smooth."
+            },
+            {
+              "step": 4,
+              "text": "With blender running, drizzle in gelatin."
+            },
+            {
+              "step": 5,
+              "text": "Chill mixture 20–30 minutes."
+            },
+            {
+              "step": 6,
+              "text": "Whip with hand mixer or food processor until light and airy."
+            }
+          ]
+        },
+        {
+          "group": "Chocolate Pudding Whipped Mousse",
+          "componentId": "chocolate-mousse-layer",
+          "steps": [
+            {
+              "step": 7,
+              "text": "Whisk pudding mix with milk for 2 minutes."
+            },
+            {
+              "step": 8,
+              "text": "Let thicken for 5 minutes."
+            },
+            {
+              "step": 9,
+              "text": "Gently fold in whipped cottage cheese base."
+            }
+          ]
+        },
+        {
+          "group": "Vanilla Pudding Whipped Mousse",
+          "componentId": "vanilla-mousse-layer",
+          "steps": [
+            {
+              "step": 10,
+              "text": "Whisk pudding mix with milk for 2 minutes."
+            },
+            {
+              "step": 11,
+              "text": "Let thicken for 5 minutes."
+            },
+            {
+              "step": 12,
+              "text": "Fold in whipped cottage cheese base and almond extract."
+            }
+          ]
+        },
+        {
+          "group": "Baked Oreo-Style Crumb Topping",
+          "componentId": "oreo-style-crumb",
+          "steps": [
+            {
+              "step": 13,
+              "text": "Preheat oven to 165°C (325°F)."
+            },
+            {
+              "step": 14,
+              "text": "Mix all dry ingredients."
+            },
+            {
+              "step": 15,
+              "text": "Stir in melted fat and vanilla."
+            },
+            {
+              "step": 16,
+              "text": "Spread thin on parchment-lined tray."
+            },
+            {
+              "step": 17,
+              "text": "Bake 8–10 minutes, stirring once."
+            },
+            {
+              "step": 18,
+              "text": "Cool completely, then crumble finely."
+            }
+          ]
+        },
+        {
+          "group": "Assemble & Chill",
+          "steps": [
+            {
+              "step": 19,
+              "text": "Spoon chocolate mousse into serving cups.",
+              "stepType": "assemble"
+            },
+            {
+              "step": 20,
+              "text": "Layer vanilla mousse on top.",
+              "stepType": "assemble"
+            },
+            {
+              "step": 21,
+              "text": "Finish with Oreo-style crumb topping.",
+              "stepType": "assemble"
+            },
+            {
+              "step": 22,
+              "text": "Chill at least 1 hour before serving.",
+              "stepType": "assemble"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
