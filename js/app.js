@@ -185,10 +185,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderRecipe(recipeJson) {
     const meta = recipeJson?.recipeMeta || {};
     const version = pickCurrentVersion(recipeJson);
+    // Some recipes use the newer template where fields live directly on the version
+    // (version.ingredients, version.instructions, etc.). Older files nest these under
+    // version.recipe.*. Support both.
+    const v = version?.recipe ?? version ?? {};
 
     safeText(titleEl, meta.title || "Untitled");
     safeText(subtitleEl, meta.subtitle || "");
-    safeText(descriptionEl, version?.description || "");
+    safeText(descriptionEl, version?.description || v?.description || "");
 
     // Tags
     const tags = Array.isArray(meta.tags) ? meta.tags : [];
@@ -204,7 +208,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Images for version
     const allImages = Array.isArray(recipeJson?.images) ? recipeJson.images : [];
-    const refs = Array.isArray(version?.imageRefs) ? version.imageRefs : [];
+    const refs = Array.isArray(version?.imageRefs) ? version.imageRefs : (Array.isArray(v?.imageRefs) ? v.imageRefs : []);
     const versionImages = refs
       .map(r => allImages.find(img => img.id === r.imageId))
       .filter(Boolean);
@@ -215,7 +219,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Ingredients
     if (ingredientsEl) {
       ingredientsEl.innerHTML = "";
-      (version?.recipe?.ingredients || []).forEach(group => {
+      (v?.ingredients || []).forEach(group => {
         const h = document.createElement("h3");
         h.textContent = group.group || "Ingredients";
         ingredientsEl.appendChild(h);
@@ -235,7 +239,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Instructions
     if (instructionsEl) {
       instructionsEl.innerHTML = "";
-      (version?.recipe?.instructions || []).forEach(group => {
+      (v?.instructions || []).forEach(group => {
         const h = document.createElement("h3");
         h.textContent = group.group || "Instructions";
         instructionsEl.appendChild(h);
@@ -253,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Adjustments
     if (adjustmentsEl) {
       adjustmentsEl.innerHTML = "";
-      const adjustments = version?.recipe?.adjustments || [];
+      const adjustments = v?.adjustments || [];
       if (!adjustments.length) {
         adjustmentsEl.innerHTML = `<div class="small-muted">No adjustments listed.</div>`;
       } else {
@@ -285,7 +289,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Nutrition (simple perServing)
     if (nutritionEl) {
-      const n = version?.recipe?.nutrition?.scopes?.perServing;
+      // Support both shapes:
+      // - v.nutrition.scopes.perServing (older)
+      // - v.nutrition.perServing (newer)
+      const n = v?.nutrition?.scopes?.perServing ?? v?.nutrition?.perServing;
       if (!n) {
         nutritionEl.innerHTML = `<div class="small-muted">No nutrition data available.</div>`;
       } else {
